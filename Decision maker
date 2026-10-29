@@ -160,8 +160,12 @@ def sign_up(usr_name, usr_password):
     global id_user, username 
     
     if len(usr_password) < 7:
-        messagebox.showwarning("Problem with sign up", "Password needs to be atleast 7 characters long")
+        messagebox.showwarning("Problem with sign up", "Password needs to be at least 7 characters long")
         return
+    
+    if len(usr_name) > 20:
+            messagebox.showwarning("Problem with sign up", "Username needs to be under 20 characters (including spaces)")
+            return
 
     row = db_find_row("SELECT password, User_ID FROM Users WHERE Users.username = ?", (usr_name, ), "sign_up") 
     if row != None or usr_name == "":
@@ -459,7 +463,7 @@ def simplest_reader(): # TO-DO
         points = list_factors[i][0] - min_val
         
         if list_factors[i][2] == 0: # if the factor is a con
-            total_points -+ points
+            total_points -= points
         else:
             total_points += points # the points awarded is for every integer that the head is above the minimim value
        
