@@ -3,6 +3,7 @@ from tkinter import Tk, Toplevel, messagebox, Button, Entry, Label, Frame, Scale
 import sqlite3
 '''
 Known issues/things
+# BIG ALERT THE CODE DOES NOT WORK THE ID SEEMS TO BE CHANGING WHEN IT SHOULD NOT NEED TO CHANGE NOW and we don't delete the factors look at the caht
  1. if you delete all decisions nothing shows
  2. if you save one decision all of the pop ups close, this is not really a bug per say, but doesn't look prefessionial - resolved
  3. Don't get caught out by thinking that it is possible to compair and add a factor at the same time it is not, the code will run through one before allowing the other to start
