@@ -458,8 +458,10 @@ def simplest_reader(): # TO-DO
         
         points = list_factors[i][0] - min_val
         
+        print(points)
+        
         if list_factors[i][2] == 0: # if the factor is a con
-            total_points -+ points
+            total_points -= points
         else:
             total_points += points # the points awarded is for every integer that the head is above the minimim value
        
