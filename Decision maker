@@ -159,7 +159,7 @@ def log_in(usr_name, usr_password):
 def sign_up(usr_name, usr_password):
     global id_user, username 
     
-    if len(usr_password) < 7:
+    if len(usr_password) < 7 or usr_name > 20:
         messagebox.showwarning("Problem with sign up", "Password needs to be atleast 7 characters long")
         return
 
