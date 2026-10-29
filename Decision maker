@@ -345,7 +345,7 @@ def HeadToTailMeathod(movers_id, name_of_mover, movers_tail, name_of_anchor, anc
     movers_head = anchors_head + 1 # this is here because it can be used later in the fuction so that the operation is done once rather than twice
     db_statment("UPDATE Factors SET head = ? WHERE Factor_ID = ?", (movers_head, movers_id), "HeadToTailMeathod 1") # updates the factors table at the mover factor so that it's head is one more than the anchorE
    
-    temp = db_pull_all_matches("SELECT Factor_ID, name_of_factor, head, tail FROM Factors WHERE head <= ? AND head > ?", (anchors_head, movers_tail), "HeadToTailMeathod 2") # PLEASE TEST THIS THIS IS SO PRONE TO HAVING A MISTAKE 
+    temp = db_pull_all_matches("SELECT Factor_ID, name_of_factor, head, tail FROM Factors WHERE head <= ? AND head > ? AND Decision_ID=?", (anchors_head, movers_tail, des_id), "HeadToTailMeathod 2") # PLEASE TEST THIS THIS IS SO PRONE TO HAVING A MISTAKE 
     size_of_temp = len(temp)
             
     for i in range(size_of_temp): # Sorts the temp list lowest to higest head with selection sort, can run up to 1000 items very quickly
@@ -466,8 +466,11 @@ def simplest_reader(): # TO-DO
             total_points -= points
         else:
             total_points += points # the points awarded is for every integer that the head is above the minimim value
-       
-    lbl_stats.config(text=f"+{total_points} +/- {uncertiaty}") # shows the sum
+
+    if total_points > 0:
+        lbl_stats.config(text=f"+{total_points} +/- {uncertiaty}") # shows the sum
+    else:
+        lbl_stats.config(text=f"{total_points} +/- {uncertiaty}") # shows the sum
 
 def print_importance(): # prints the points each factor gains
     min_val = db_find_row("SELECT MIN(tail) FROM Factors WHERE Decision_ID = ?", (des_id,), "simplest_reader 1")[0] # the [0] is there because a tuple gets returned
