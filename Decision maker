@@ -373,7 +373,7 @@ def HeadToTailMeathod(movers_id, name_of_mover, movers_tail, name_of_anchor, anc
         if recent_comparison == 1: # we know that everything in the temp can be less than mover
             db_statment("UPDATE Factors SET tail = ? WHERE Factor_ID = ?", (current_factor[2], movers_id), "HeadToTailMeathod 1") # updates the movers tail to the factors head
         elif recent_comparison == 0: # if the user says that factor is less than mover THIS STILL NEEDS TO BE CHECKED
-            temp.append([current_factor[0], current_factor[1], current_factor[2]]) # sends the factor to the back of the line so that it can be head to tailed
+            temp.append([current_factor[0], current_factor[1], current_factor[2], current_factor[3]]) # sends the factor to the back of the line so that it can be head to tailed
             
     simplest_reader() # shows the user the change SHOULD I HAVE TOTAL_POINTS AND UNCERTIIATY BE GLOABL AND DO A CHANGE CHECK?
 
