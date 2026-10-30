@@ -28,7 +28,7 @@ attempts = 0
 username = ""
 id_user = "none"
 
-con = sqlite3.connect("2hemp.db") #con is an object
+con = sqlite3.connect("decision_maker.db") #con is an object
 querry = """
 CREATE TABLE IF NOT EXISTS Users (
     User_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -159,9 +159,11 @@ def log_in(usr_name, usr_password):
 def sign_up(usr_name, usr_password):
     global id_user, username 
     
+    '''
     if len(usr_password) < 7:
         messagebox.showwarning("Problem with sign up", "Password needs to be at least 7 characters long")
         return
+    '''
     
     if len(usr_name) > 20:
             messagebox.showwarning("Problem with sign up", "Username needs to be under 20 characters (including spaces)")
@@ -219,8 +221,10 @@ def open_add_des():
 
     entry_add_des = Entry(pop_up_for_adding_decision, bg=Background, fg=Foreground, insertbackground="orange")
     entry_add_des.pack(side="left", pady=5)
+    entry_add_des.focus_set() # auto starts the user typing
 
     Button(pop_up_for_adding_decision, text="save", command= lambda: add_decision(entry_add_des.get()), bg=Background, fg=Foreground).pack(side="left", padx=5) # save button
+    entry_add_des.bind("<Return>", lambda event: add_decision(entry_add_des.get())) # this allows the entry key to be used
     # ------------------------------------------------------------------------------------------ pop up ------------------------------------------------------------------------------------------ #
     
 def open_decision_tree(Current_screen): # this moves to decisioini tree and creates all the things needed TRY MAKE THIS MORE GENERAL SO USERNAME IS MADE GLOABL NOT IN THIS FUCTION AND ID OF USER AS WELL
@@ -307,6 +311,8 @@ def open_add_factor(): # this will always have undeffined factors, and has been 
     
     entry_add_factor = Entry(pop_up_for_adding_factor, bg=Background, fg=Foreground, insertbackground="orange")
     entry_add_factor.grid(row=1, column=0, padx=5, pady=4)
+    entry_add_factor.bind("<Return>", lambda event: add_factor(entry_add_factor.get(), slider.get())) # this allows the entry key to be used
+    entry_add_factor.focus_set() # auto starts the user typing
 
     Label(pop_up_for_adding_factor, text="Pro                  Con", bg=Background, fg=Foreground).grid(row=0, column=3, padx=5, pady=4)
     
@@ -423,6 +429,12 @@ def comp(): # these willdb_insert_into(sql_statment, inserts, location) never ha
 
 
 def compair_greater(a, b): # NEEDS TESTING AND MAYBE IMPROVING
+    try: # this does not work
+        if pop_up_for_compair.winfo_exists():
+            return
+    except:
+        pass
+    
     answer = None
     def save():
         nonlocal answer
